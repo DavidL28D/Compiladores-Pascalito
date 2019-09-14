@@ -1,5 +1,5 @@
 package ast;
 
 public enum tipoOp {
-	menor,igual,mas,menos,por,entre
+	mayor,mayorigual,menor,menorigual,igual,mas,menos,por,entre,and,or,not
 }
