@@ -192,7 +192,7 @@ public class Generador {
                                         UtGen.emitirRM("MUL", 2, 2, UtGen.AC1, "op: *");
                                         UtGen.emitirRM("SUB", 2, UtGen.AC1, 2, "op: %");
                                 break;
-                        case    mayorigual: UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.Ac, "op: >=");
+                        case    mayorigual: UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.AC, "op: >=");
                                             UtGen.emitirRM("JGE", UtGen.AC, 2, UtGen.PC, "Voy dos instrucciones mas alla del if verdadero.");
                                             UtGen.emitirRM("LDC", UtGen.AC, 0, UtGen.AC, "En caso de ser falso, se asigna 0");
                                             UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "Salto incondicional a direccion PC+1");

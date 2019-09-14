@@ -1,8 +1,8 @@
 package ast;
 
-public class NodoIndentificadorBool extends NodoIndentificador{
+public class NodoIdentificadorBool extends NodoIdentificador{
 
-    public NodoIndentificadorBool(String nombre){
+    public NodoIdentificadorBool(String nombre){
         super(nombre);
     }
 

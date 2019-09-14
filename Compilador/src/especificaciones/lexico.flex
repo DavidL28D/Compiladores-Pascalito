@@ -1,4 +1,4 @@
-package compilador;
+package tiny;
 
 import java_cup.runtime.*;
 
@@ -82,7 +82,7 @@ espacio		= [ \t]+
 			return sf.newSymbol("GT",sym.GT);
                     }
 ">="            {
-                        if(debug) System.out.printfln("token GTEQ");
+                        if(debug) System.out.println("token GTEQ");
                         return sf.newSymbol("GTEQ",sym.GTEQ);
                     }
 "<>"             {	if(debug) System.out.println("token DIFF");
@@ -112,24 +112,15 @@ espacio		= [ \t]+
 ";"             {	if(debug) System.out.println("token SEMI");
 			return sf.newSymbol("SEMI",sym.SEMI);
 			}
-"OR"            {
-                        if(debug) System.out.println("token OR");
-                        return sf.newSymbol("OR",sym.OR);
-                        }
-"NOT"           {
-                        if(debug) System.out.println("token NOT");
-                        return sf.newSymbol("NOT",sym.NOT);
-                        }
+
 "["             {
-                        if(debug) System.out.println("token RCOR");
-                        return sf.newSymbol("RCOR",sym.RCOR);
-                        }
-"]"             {       if(debug) System.out.println("token LCOR");
+                        if(debug) System.out.println("token LCOR");
                         return sf.newSymbol("LCOR",sym.LCOR);
                         }
-"AND"            {	if(debug) System.out.println("token AND");
-			return sf.newSymbol("AND",sym.AND);
-			}
+"]"             {       if(debug) System.out.println("token RCOR");
+                        return sf.newSymbol("RCOR",sym.RCOR);
+                        }
+
 {numero}        {	if(debug) System.out.println("token NUM");
 			return sf.newSymbol("NUM",sym.NUM,new Integer(yytext()));
 			}
