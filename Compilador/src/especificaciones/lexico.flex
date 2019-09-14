@@ -73,6 +73,9 @@ espacio		= [ \t]+
 "<"             {	if(debug) System.out.println("token LT");
 			return sf.newSymbol("LT",sym.LT);
 			}
+"<>"             {	if(debug) System.out.println("token DIFF");
+			return sf.newSymbol("DIFF",sym.DIFF);
+			}
 "+"             {	if(debug) System.out.println("token PLUS");
 			return sf.newSymbol("PLUS",sym.PLUS);
 			}
