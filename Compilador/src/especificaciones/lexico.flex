@@ -94,6 +94,9 @@ espacio		= [ \t]+
 ";"             {	if(debug) System.out.println("token SEMI");
 			return sf.newSymbol("SEMI",sym.SEMI);
 			}
+"AND"            {	if(debug) System.out.println("token AND");
+			return sf.newSymbol("AND",sym.AND);
+			}
 {numero}        {	if(debug) System.out.println("token NUM");
 			return sf.newSymbol("NUM",sym.NUM,new Integer(yytext()));
 			}
