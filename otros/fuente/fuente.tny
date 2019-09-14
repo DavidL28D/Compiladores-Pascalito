@@ -1,0 +1,6 @@
+{ Sample program
+  in TINY language -
+  computes factorial
+}
+modulo := 4 mod 2;
+write modulo

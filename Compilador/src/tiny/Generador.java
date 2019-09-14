@@ -188,6 +188,10 @@ public class Generador {
 		/* Ahora cargo/saco de la pila el valor izquierdo */
 		UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "op: pop o cargo de la pila el valor izquierdo en AC1");
 		switch(n.getOperacion()){
+                        case    mod: UtGen.emitirRO("DIV", 2, UtGen.AC, UtGen.AC1, "op: /");
+                                        UtGen.emitirRM("MUL", 2, 2, UtGen.AC1, "op: *");
+                                        UtGen.emitirRM("SUB", 2, UtGen.AC1, 2, "op: %");
+                            break;
 			case	mas:	UtGen.emitirRO("ADD", UtGen.AC, UtGen.AC1, UtGen.AC, "op: +");		
 							break;
 			case	menos:	UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.AC, "op: -");

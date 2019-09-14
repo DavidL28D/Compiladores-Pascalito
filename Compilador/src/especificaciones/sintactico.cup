@@ -36,6 +36,7 @@ terminal OVER;
 terminal LPAREN;
 terminal RPAREN;
 terminal SEMI;
+terminal MOD;
 
 /* Simbolos No Terminales */
 non terminal program;
@@ -52,6 +53,7 @@ non terminal NodoBase term;
 non terminal NodoBase factor;
 
 /* Precedencia de operadores */
+precedence left MOD;
 precedence left PLUS;
 precedence left MINUS;
 precedence left TIMES;
@@ -155,13 +157,16 @@ exp         ::= simple_exp:exI LT simple_exp:exD	{: if(modoDepuracion) System.ou
 					:}
 		;
 
-simple_exp  ::= simple_exp:exI PLUS term:exD	{: if(modoDepuracion) System.out.println("\t regla 10a"); 
+simple_exp  ::= simple_exp:exI MOD term:exD	{: if(modoDepuracion) System.out.println("\t regla 10a"); 
+							RESULT = new NodoOperacion(exI,tipoOp.mod,exD);
+							:}
+		|simple_exp:exI PLUS term:exD	{: if(modoDepuracion) System.out.println("\t regla 10b"); 
 							RESULT = new NodoOperacion(exI,tipoOp.mas,exD);
 							:}
-		| simple_exp:exI MINUS term:exD	{: if(modoDepuracion) System.out.println("\t regla 10b"); 
+		| simple_exp:exI MINUS term:exD	{: if(modoDepuracion) System.out.println("\t regla 10c"); 
 							RESULT = new NodoOperacion(exI,tipoOp.menos,exD);
 							:}
-		| term:ex	{: if(modoDepuracion) System.out.println("\t regla 10c"); 
+		| term:ex	{: if(modoDepuracion) System.out.println("\t regla 10d"); 
 				RESULT=ex;
 				:}
 		;
