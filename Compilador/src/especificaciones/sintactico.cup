@@ -29,6 +29,8 @@ terminal Integer NUM;
 terminal ASSIGN;
 terminal EQ;
 terminal LT;
+terminal DIFF;
+terminal GT;
 terminal PLUS;
 terminal MINUS;
 terminal TIMES;
@@ -149,11 +151,24 @@ write_stmt  ::= WRITE exp:ex	{: if(modoDepuracion) System.out.println("\t regla 
 exp         ::= simple_exp:exI LT simple_exp:exD	{: if(modoDepuracion) System.out.println("\t regla 9a"); 
 								RESULT = new NodoOperacion(exI,tipoOp.menor,exD);
 								:} 
+
 		| simple_exp:exI EQ simple_exp:exD	{: if(modoDepuracion) System.out.println("\t regla 9b"); 
 							RESULT = new NodoOperacion(exI,tipoOp.igual,exD);
 							:}
 		| simple_exp:ex	{: if(modoDepuracion) System.out.println("\t regla 9c"); 
 					RESULT = ex;
+					:}
+		| simple_exp:exI DIFF simple_exp:exD	{: if(modoDepuracion) System.out.println("\t regla 9d"); 
+					RESULT = new NodoOperacion(exI,tipoOp.diferente,exD);
+					:}
+		| simple_exp:exI GT simple_exp:exD	{: if(modoDepuracion) System.out.println("\t regla 9f"); 
+					RESULT = new NodoOperacion(exI,tipoOp.mayor,exD);
+					:}
+		| simple_exp:exI GTEQ simple_exp:exD	{: if(modoDepuracion) System.out.println("\t regla 9g"); 
+					RESULT = new NodoOperacion(exI,tipoOp.mayorigual,exD);
+					:}
+		| simple_exp:exI LTEQ simple_exp:exD	{: if(modoDepuracion) System.out.println("\t regla 9h"); 
+					RESULT = new NodoOperacion(exI,tipoOp.menorigual,exD);
 					:}
 		;
 

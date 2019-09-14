@@ -85,6 +85,9 @@ espacio		= [ \t]+
                         if(debug) System.out.printfln("token GTEQ");
                         return sf.newSymbol("GTEQ",sym.GTEQ);
                     }
+"<>"             {	if(debug) System.out.println("token DIFF");
+			return sf.newSymbol("DIFF",sym.DIFF);
+			}
 "+"             {	if(debug) System.out.println("token PLUS");
 			return sf.newSymbol("PLUS",sym.PLUS);
 			}
