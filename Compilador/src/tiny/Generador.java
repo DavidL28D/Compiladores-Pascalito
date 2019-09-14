@@ -191,7 +191,14 @@ public class Generador {
                         case    mod: UtGen.emitirRO("DIV", 2, UtGen.AC, UtGen.AC1, "op: /");
                                         UtGen.emitirRM("MUL", 2, 2, UtGen.AC1, "op: *");
                                         UtGen.emitirRM("SUB", 2, UtGen.AC1, 2, "op: %");
-                            break;
+                                break;
+                        case    mayorigual: UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.Ac, "op: >=");
+                                            UtGen.emitirRM("JGE", UtGen.AC, 2, UtGen.PC, "Voy dos instrucciones mas alla del if verdadero.");
+                                            UtGen.emitirRM("LDC", UtGen.AC, 0, UtGen.AC, "En caso de ser falso, se asigna 0");
+                                            UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "Salto incondicional a direccion PC+1");
+                                            UtGen.emitirRM("LDC", UtGen.AC, 1, UtGen.AC, "En caso de ser verdadero, se asigna 1");
+                                            
+                                break;
 			case	mas:	UtGen.emitirRO("ADD", UtGen.AC, UtGen.AC1, UtGen.AC, "op: +");		
 							break;
 			case	menos:	UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.AC, "op: -");
