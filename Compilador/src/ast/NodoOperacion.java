@@ -26,6 +26,11 @@ public class NodoOperacion extends NodoBase {
 		this.operacion = tipoOperacion;
 	}
 
+    public NodoOperacion(tipoOp tipoOp, NodoBool exbD) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
 	public NodoBase getOpIzquierdo() {
 		return opIzquierdo;
 	}
