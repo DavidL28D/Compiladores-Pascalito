@@ -127,6 +127,9 @@ espacio		= [ \t]+
 "]"             {       if(debug) System.out.println("token LCOR");
                         return sf.newSymbol("LCOR",sym.LCOR);
                         }
+"AND"            {	if(debug) System.out.println("token AND");
+			return sf.newSymbol("AND",sym.AND);
+			}
 {numero}        {	if(debug) System.out.println("token NUM");
 			return sf.newSymbol("NUM",sym.NUM,new Integer(yytext()));
 			}

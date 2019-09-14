@@ -39,6 +39,9 @@ terminal LPAREN;
 terminal RPAREN;
 terminal SEMI;
 terminal MOD;
+terminal AND;
+terminal OR;
+terminal NOT;
 
 /* Simbolos No Terminales */
 non terminal program;
@@ -53,6 +56,8 @@ non terminal NodoBase exp;
 non terminal NodoBase simple_exp;
 non terminal NodoBase term;
 non terminal NodoBase factor;
+non terminal NodoBool bool_exp;
+non terminal NodoBool ID_BOOL;
 
 /* Precedencia de operadores */
 precedence left MOD;
@@ -169,6 +174,8 @@ exp         ::= simple_exp:exI LT simple_exp:exD	{: if(modoDepuracion) System.ou
 					:}
 		| simple_exp:exI LTEQ simple_exp:exD	{: if(modoDepuracion) System.out.println("\t regla 9h"); 
 					RESULT = new NodoOperacion(exI,tipoOp.menorigual,exD);
+		| bool_exp:exB {: if(modoDepuracion) System.out.println("\t regla 9i");
+					RESULT = exB;
 					:}
 		;
 
@@ -222,4 +229,18 @@ factor      ::= LPAREN exp:ex RPAREN	{: if(modoDepuracion) System.out.println("\
 				System.out.println("Ocurrio error en cup # 0003");
 				RESULT=null;
 				:}
+		;
+
+bool_exp	::= bool_exp:exbI AND bool_term:exbD		{: if(modoDepuracion) System.out.println("\t regla 13a");
+							RESULT = new NodoOperacion(exbI,tipoOp.and,exbD);							
+							:}
+		|	bool_exp:exbI OR bool_term:exbD		{: if(modoDepuracion) System.out.println("\t regla 13b");
+							RESULT = new NodoOperacion(exbI,tipoOp.or,exbD);							
+							:}
+		|	NOT bool_exp:exbD	{: if(modoDepuracion) System.out.println("\t regla 13c");
+							RESULT = new NodoOperacion(tipoOp.not,exbD);
+							:}
+		|	bool_term:exb   {: if(modoDepuracion) System.out.println("\t regla 13d"); 
+							RESULT=exb;
+							:}
 		;
