@@ -130,8 +130,11 @@ static void imprimirNodo( NodoBase raiz )
 		System.out.println("NUM, val= "+ ((NodoValor)raiz).getValor());
 	}
 
-	if(	raiz instanceof NodoIdentificador ){
-		System.out.println("ID, nombre= "+ ((NodoIdentificador)raiz).getNombre());
+	if(	raiz instanceof NodoIdentificadorInt ){
+		System.out.println("Declaracion de variable tipo: int\n    ID, nombre= "+ ((NodoIdentificadorInt)raiz).getNombre());
+	}
+        if(	raiz instanceof NodoIdentificadorBool ){
+		System.out.println("Declaracion de variable tipo: bool\n    ID, nombre= "+ ((NodoIdentificadorBool)raiz).getNombre());
 	}
 
 }
