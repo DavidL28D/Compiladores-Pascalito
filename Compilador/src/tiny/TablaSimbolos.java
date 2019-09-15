@@ -53,10 +53,13 @@ public class TablaSimbolos {
 	    	cargarTabla(((NodoRepeat)raiz).getCuerpo());
 	    	cargarTabla(((NodoRepeat)raiz).getPrueba());
 	    }
-		else if (raiz instanceof  NodoFor){
+            else if (raiz instanceof  NodoFor){
+                
 	    	cargarTabla(((NodoFor)raiz).getIndice());
 	    	cargarTabla(((NodoFor)raiz).getCondicion());
-            cargarTabla(((NodoFor)raiz).getCuerpo());
+                cargarTabla(((NodoFor)raiz).getCc());
+                cargarTabla(((NodoFor)raiz).getCuerpo());
+                
 	    }else if(raiz instanceof NodoWhile){
 			cargarTabla(((NodoWhile)raiz).getCondicion());
 			cargarTabla(((NodoWhile)raiz).getCuerpo());

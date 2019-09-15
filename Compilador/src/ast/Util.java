@@ -55,16 +55,22 @@ public class Util {
 		    	System.out.println("**Prueba REPEAT**");
 		    	imprimirAST(((NodoRepeat)raiz).getPrueba());
 		    }
-            else if (raiz instanceof  NodoFor){
+                    
+                    else if (raiz instanceof  NodoFor){
+                        
 		    	printSpaces();
                         System.out.println("**Indice FOR**");
 		    	imprimirAST(((NodoFor)raiz).getIndice());
                         printSpaces();
-		    	System.out.println("**Cuerpo FOR**");
-		    	imprimirAST(((NodoFor)raiz).getCuerpo());
-		    	printSpaces();
-		    	System.out.println("**Condicion For**");
+                        System.out.println("**Condicion FOR**");
 		    	imprimirAST(((NodoFor)raiz).getCondicion());
+                        printSpaces();
+		    	System.out.println("**Each FOR**");
+		    	imprimirAST(((NodoFor)raiz).getCc());
+		    	printSpaces();
+		    	System.out.println("**Cuerpo For**");
+		    	imprimirAST(((NodoFor)raiz).getCuerpo());
+                        
 		    }
 			else if( raiz instanceof NodoWhile){
 				printSpaces();

@@ -80,9 +80,9 @@ public class Generador {
 		}else if (nodo instanceof NodoOperacion){
 			generarOperacion(nodo);
 		}else if (nodo instanceof NodoWhile){
-            generarWhile(nodo);
-        }else if (nodo instanceof NodoOperacion){
-			generarOperacion(nodo);
+                        generarWhile(nodo);
+                }else if (nodo instanceof NodoOperacion){
+                                generarOperacion(nodo);
 		}else{
 			System.out.println("BUG: Tipo de nodo a generar desconocido");
 		}
@@ -143,6 +143,7 @@ public class Generador {
             if(UtGen.debug)	UtGen.emitirComentario("-> For");
             localidadSaltoInicio = UtGen.emitirSalto(0);
             UtGen.emitirComentario("For: el salto hacia el final (luego del cuerpo) del for debe estar aqui");
+            
             // Se genera el indice del for
             generar(n.getIndice());
 
@@ -153,8 +154,13 @@ public class Generador {
             generar(n.getCuerpo());
 
             // Se genera la secuencia del for
-            //generar(n.getSecuencia());
-
+            generar(n.getCc());
+            
+            NodoAsignacion a = (NodoAsignacion)n.getIndice();
+            NodoValor av = (NodoValor)a.getExpresion();
+            int culo = av.getValor();
+            
+            System.out.println("Hola*******************"+ av.getValor());
             UtGen.emitirRM_Abs("JEQ", UtGen.AC, localidadSaltoInicio, "For: jmp hacia el inicio del cuerpo");
             if(UtGen.debug)	UtGen.emitirComentario("<- For");
 	}

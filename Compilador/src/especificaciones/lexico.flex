@@ -50,6 +50,9 @@ espacio		= [ \t]+
 "do"             {	if(debug) System.out.println("token DO");
 			return sf.newSymbol("DO",sym.DO);
 			}
+"each"             {	if(debug) System.out.println("token EACH");
+			return sf.newSymbol("EACH",sym.EACH);
+			}
 "if"            {	if(debug) System.out.println("token IF");
 			return sf.newSymbol("IF",sym.IF);
 			}
@@ -70,9 +73,6 @@ espacio		= [ \t]+
 			}
 "while"			{	if(debug) System.out.println("token WHILE");
 			return sf.newSymbol("WHILE",sym.WHILE);
-			}
-"do"			{	if(debug) System.out.println("token DO");
-			return sf.newSymbol("DO",sym.DO);
 			}
 "read"          {	if(debug) System.out.println("token READ");
 			return sf.newSymbol("READ",sym.READ);
