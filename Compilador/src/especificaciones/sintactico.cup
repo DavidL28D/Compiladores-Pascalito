@@ -52,6 +52,7 @@ terminal NOT;
 terminal TIPOENTERO, TIPOBOOL;
 terminal FOR;
 terminal TO;
+terminal EACH;
 
 /* Simbolos No Terminales */
 non terminal program;
@@ -150,8 +151,8 @@ while_stmt ::= WHILE exp:condicion DO stmt_seq:cuerpo END {: if(modoDepuracion) 
 		;
 
 
-for_stmt ::= FOR assign_stmt:indice TO exp:condicion DO stmt_seq:cuerpo END {: if(modoDepuracion) System.out.println("\t Regla 13a");
-	RESULT = new NodoFor(indice, condicion, cuerpo);
+for_stmt ::= FOR assign_stmt:indice TO exp:condicion EACH exp:cc DO stmt_seq:cuerpo END {: if(modoDepuracion) System.out.println("\t Regla 13a");
+	RESULT = new NodoFor(indice, condicion, cc,  cuerpo);
 :};
 
 assign_stmt ::= ID:variable 	{: if(modoDepuracion) System.out.println("\t regla 6 parte del medio"); 
