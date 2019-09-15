@@ -188,9 +188,9 @@ public class Generador {
 		/* Ahora cargo/saco de la pila el valor izquierdo */
 		UtGen.emitirRM("LD", UtGen.AC1, ++desplazamientoTmp, UtGen.MP, "op: pop o cargo de la pila el valor izquierdo en AC1");
 		switch(n.getOperacion()){
-                        case    mod: UtGen.emitirRO("DIV", 2, UtGen.AC, UtGen.AC1, "op: /");
-                                        UtGen.emitirRM("MUL", 2, 2, UtGen.AC1, "op: *");
-                                        UtGen.emitirRM("SUB", 2, UtGen.AC1, 2, "op: %");
+                        case    mod: UtGen.emitirRO("DIV", 2, UtGen.AC1, UtGen.AC, "op: /");
+                                        UtGen.emitirRO("MUL", 2, 2, UtGen.AC, "op: *");
+                                        UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, 2, "op: %");
                                 break;
                         case    mayorigual: UtGen.emitirRO("SUB", UtGen.AC, UtGen.AC1, UtGen.AC, "op: >=");
                                             UtGen.emitirRM("JGE", UtGen.AC, 2, UtGen.PC, "Voy dos instrucciones mas alla del if verdadero.");
@@ -219,7 +219,7 @@ public class Generador {
 							UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "Salto incodicional a direccion: PC+1 (es falso evito colocarlo verdadero)");
 							UtGen.emitirRM("LDC", UtGen.AC, 1, UtGen.AC, "caso de verdadero (AC=1)");
 							break;
-                        case    mayor:  UtGen.emitirRO("SUB",UtGen.AC, UtGen.AC, UtGen.AC1, "op: >");
+                        case    mayor:  UtGen.emitirRO("SUB",UtGen.AC, UtGen.AC1, UtGen.AC, "op: >");
                                                         UtGen.emitirRM("JGT",UtGen.AC, 2, UtGen.PC, "voy dos instrucciones mas alla if verdadero (AC>=0)");
                                                         UtGen.emitirRM("LDC", UtGen.AC, 0, UtGen.AC, "caso de falso (AC < 0)");
                                                         UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "Salto incondicional a la direccion: PC+1 (es false evoto colocarlo verdadero))");
