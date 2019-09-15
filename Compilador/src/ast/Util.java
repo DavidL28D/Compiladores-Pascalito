@@ -22,6 +22,9 @@ public class Util {
 
 		    else if (raiz instanceof  NodoEscribir)
 		    	System.out.println("Escribir");
+                    
+                    else if (raiz instanceof  NodoFor)
+		    	System.out.println("For");
 		    
 		    else if (raiz instanceof NodoOperacion
 		    		|| raiz instanceof NodoValor
@@ -50,6 +53,17 @@ public class Util {
 		    	printSpaces();
 		    	System.out.println("**Prueba REPEAT**");
 		    	imprimirAST(((NodoRepeat)raiz).getPrueba());
+		    }
+                    else if (raiz instanceof  NodoFor){
+		    	printSpaces();
+                        System.out.println("**Indice FOR**");
+		    	imprimirAST(((NodoFor)raiz).getIndice());
+                        printSpaces();
+		    	System.out.println("**Cuerpo FOR**");
+		    	imprimirAST(((NodoFor)raiz).getCuerpo());
+		    	printSpaces();
+		    	System.out.println("**Condicion For**");
+		    	imprimirAST(((NodoFor)raiz).getCondicion());
 		    }
 		    else if (raiz instanceof  NodoAsignacion)
 		    	imprimirAST(((NodoAsignacion)raiz).getExpresion());

@@ -40,6 +40,16 @@ identificador	= {letra}+
 nuevalinea		= \n | \n\r | \r\n
 espacio		= [ \t]+
 %%
+
+"for"             {	if(debug) System.out.println("token FOR");
+			return sf.newSymbol("FOR",sym.FOR);
+			}
+"to"             {	if(debug) System.out.println("token TO");
+			return sf.newSymbol("TO",sym.TO);
+			}
+"do"             {	if(debug) System.out.println("token DO");
+			return sf.newSymbol("DO",sym.DO);
+			}
 "if"            {	if(debug) System.out.println("token IF");
 			return sf.newSymbol("IF",sym.IF);
 			}
@@ -119,22 +129,6 @@ espacio		= [ \t]+
                         }
 "]"             {       if(debug) System.out.println("token RCOR");
                         return sf.newSymbol("RCOR",sym.RCOR);
-                        }
-"and"             {       if(debug) System.out.println("token AND");
-                        return sf.newSymbol("AND",sym.AND);
-                        }
-"or"             {       if(debug) System.out.println("token OR");
-                        return sf.newSymbol("OR",sym.OR);
-                        }
-"not"             {       if(debug) System.out.println("token NOT");
-                        return sf.newSymbol("NOT",sym.NOT);
-                        }
-"int"             {       if(debug) System.out.println("token TIPOENTERO");
-                        return sf.newSymbol("TIPOENTERO",sym.TIPOENTERO);
-                        }
-
-"bool"             {       if(debug) System.out.println("token TIPOBOOL");
-                        return sf.newSymbol("TIPOBOOL",sym.TIPOBOOL);
                         }
 
 {numero}        {	if(debug) System.out.println("token NUM");
