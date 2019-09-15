@@ -79,6 +79,10 @@ public class Generador {
 			generarIdentificadorBool(nodo);
 		}else if (nodo instanceof NodoOperacion){
 			generarOperacion(nodo);
+		}else if (nodo instanceof NodoWhile){
+            generarWhile(nodo);
+        }else if (nodo instanceof NodoOperacion){
+			generarOperacion(nodo);
 		}else{
 			System.out.println("BUG: Tipo de nodo a generar desconocido");
 		}
@@ -154,6 +158,16 @@ public class Generador {
             UtGen.emitirRM_Abs("JEQ", UtGen.AC, localidadSaltoInicio, "For: jmp hacia el inicio del cuerpo");
             if(UtGen.debug)	UtGen.emitirComentario("<- For");
 	}
+
+	private static void generarWhile(NodoBase nodo){
+		NodoWhile n = (NodoWhile)nodo;
+		int localidadSaltoInicio;
+		if(UtGen.debug) UtGen.emitirComentario("-> while");
+			/*Obtengo la linea donde inicia el ciclo */
+			/*Salto si la condicion del while no se cumple */
+			/* */
+		if(UtGen.debug)	UtGen.emitirComentario("<- while");	
+	}		
 	
 	private static void generarAsignacion(NodoBase nodo){
 		NodoAsignacion n = (NodoAsignacion)nodo;

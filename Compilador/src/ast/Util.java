@@ -13,7 +13,8 @@ public class Util {
 		    	System.out.println("If");
 		    else if (raiz instanceof  NodoRepeat)
 		    	System.out.println("Repeat");
-		    
+                    else if (raiz instanceof NodoWhile)
+                          System.out.println("While");
 		    else if (raiz instanceof  NodoAsignacion)
 		    	System.out.println("Asignacion a: "+((NodoAsignacion)raiz).getIdentificador());
 
@@ -54,7 +55,7 @@ public class Util {
 		    	System.out.println("**Prueba REPEAT**");
 		    	imprimirAST(((NodoRepeat)raiz).getPrueba());
 		    }
-                    else if (raiz instanceof  NodoFor){
+            else if (raiz instanceof  NodoFor){
 		    	printSpaces();
                         System.out.println("**Indice FOR**");
 		    	imprimirAST(((NodoFor)raiz).getIndice());
@@ -65,6 +66,14 @@ public class Util {
 		    	System.out.println("**Condicion For**");
 		    	imprimirAST(((NodoFor)raiz).getCondicion());
 		    }
+			else if( raiz instanceof NodoWhile){
+				printSpaces();
+				System.out.println("**Condicion WHILE**"); 
+				imprimirAST(((NodoWhile)raiz).getCondicion());
+				printSpaces();
+				System.out.println("**Cuerpo WHILE**");
+				imprimirAST(((NodoWhile)raiz).getCuerpo());
+			}
 		    else if (raiz instanceof  NodoAsignacion)
 		    	imprimirAST(((NodoAsignacion)raiz).getExpresion());
 		    else if (raiz instanceof  NodoEscribir)

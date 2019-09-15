@@ -13,6 +13,7 @@ import ast.NodoIdentificadorInt;
 import ast.NodoIf;
 import ast.NodoOperacion;
 import ast.NodoRepeat;
+import ast.NodoWhile;
 
 public class TablaSimbolos {
 	private HashMap<String, RegistroSimbolo> tabla;
@@ -25,7 +26,7 @@ public class TablaSimbolos {
 	}
 
 	public void cargarTabla(NodoBase raiz){
-		while (raiz != null) {
+            while (raiz != null) {
 	    if (raiz instanceof NodoIdentificadorBool){
 	    	InsertarSimbolo(((NodoIdentificador)raiz).getNombre(),-1,"bool");
 	    	//TODO: A�adir el numero de linea y localidad de memoria correcta
@@ -47,11 +48,14 @@ public class TablaSimbolos {
 	    	cargarTabla(((NodoRepeat)raiz).getCuerpo());
 	    	cargarTabla(((NodoRepeat)raiz).getPrueba());
 	    }
-            else if (raiz instanceof  NodoFor){
+		else if (raiz instanceof  NodoFor){
 	    	cargarTabla(((NodoFor)raiz).getIndice());
 	    	cargarTabla(((NodoFor)raiz).getCondicion());
-                cargarTabla(((NodoFor)raiz).getCuerpo());
-	    }
+            cargarTabla(((NodoFor)raiz).getCuerpo());
+	    }else if(raiz instanceof NodoWhile){
+			cargarTabla(((NodoWhile)raiz).getCondicion());
+			cargarTabla(((NodoWhile)raiz).getCuerpo());
+            }
 	    else if (raiz instanceof  NodoAsignacion)
 	    	cargarTabla(((NodoAsignacion)raiz).getExpresion());
 	    else if (raiz instanceof  NodoEscribir)
@@ -62,7 +66,8 @@ public class TablaSimbolos {
 	    }
 	    raiz = raiz.getHermanoDerecha();
 	  }
-	}
+
+        }	
 	
 	//true es nuevo no existe se insertara, false ya existe NO se vuelve a insertar 
 	public boolean InsertarSimbolo(String identificador, int numLinea, String tipo){

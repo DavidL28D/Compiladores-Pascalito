@@ -22,6 +22,8 @@ terminal ELSE;
 terminal END;
 terminal REPEAT;
 terminal UNTIL;
+terminal WHILE;
+terminal DO;
 terminal READ;
 terminal WRITE;
 terminal String ID;
@@ -50,7 +52,6 @@ terminal NOT;
 terminal TIPOENTERO, TIPOBOOL;
 terminal FOR;
 terminal TO;
-terminal DO;
 
 /* Simbolos No Terminales */
 non terminal program;
@@ -67,6 +68,8 @@ non terminal NodoBase term;
 non terminal NodoBase factor;
 non terminal NodoBase declaracion;
 non terminal NodoBase for_stmt;
+non terminal NodoBase while_stmt;
+
 
 
 /* Precedencia de operadores */
@@ -103,25 +106,28 @@ stmt        ::= if_stmt:sif	{: if(modoDepuracion) System.out.println("\t regla 3
 					RESULT=sif;
 					:}
             | repeat_stmt:srep	{: if(modoDepuracion) System.out.println("\t regla 3b"); 
-						RESULT=srep;
+					RESULT=srep;
 						:}
             | for_stmt:sfor	{: if(modoDepuracion) System.out.println("\t regla 3c"); 
 					RESULT=sfor;
 					:}
-            | assign_stmt:sasi	{: if(modoDepuracion) System.out.println("\t regla 3d"); 
-						RESULT=sasi;
+            | while_stmt:smien {: if(modoDepuracion) System.out.println("\t regla 3d");
+					RESULT=smien;
 						:}
-            | read_stmt:slec	{: if(modoDepuracion) System.out.println("\t regla 3e"); 
+            | assign_stmt:sasi	{: if(modoDepuracion) System.out.println("\t regla 3e"); 
+					RESULT=sasi;
+						:}
+            | read_stmt:slec	{: if(modoDepuracion) System.out.println("\t regla 3f"); 
 					RESULT=slec;
 					:}
-            | write_stmt:sesc	{: if(modoDepuracion) System.out.println("\t regla 3f"); 
+            | write_stmt:sesc	{: if(modoDepuracion) System.out.println("\t regla 3g"); 
 					RESULT=sesc;
-            				:}
-            | error	{: if(modoDepuracion) System.out.println("\t regla 3g"); 
+            		:}
+            | error	{: if(modoDepuracion) System.out.println("\t regla 3h"); 
 				System.out.println("Ocurrio error en cup # 0004");
 				RESULT=null;
 				:}
-            | declaracion:dec   {: if(modoDepuracion) System.out.println("\t regla 3g"); 
+            | declaracion:dec   {: if(modoDepuracion) System.out.println("\t regla 3i"); 
 					RESULT=dec;
                                 :}
             ;
@@ -138,6 +144,11 @@ repeat_stmt ::= REPEAT stmt_seq:cuerpo UNTIL exp:prueba	{: if(modoDepuracion) Sy
 							RESULT = new NodoRepeat(cuerpo,prueba);
 							:}
 		;
+while_stmt ::= WHILE exp:condicion DO stmt_seq:cuerpo END {: if(modoDepuracion) System.out.println("\t regla 6");
+							RESULT = new NodoWhile(condicion,cuerpo);
+							:}
+		;
+
 
 for_stmt ::= FOR assign_stmt:indice TO exp:condicion DO stmt_seq:cuerpo END {: if(modoDepuracion) System.out.println("\t Regla 13a");
 	RESULT = new NodoFor(indice, condicion, cuerpo);
@@ -268,10 +279,10 @@ factor  ::= LPAREN exp:ex RPAREN	{: if(modoDepuracion) System.out.println("\t re
 		;
 
 declaracion ::= TIPOENTERO ID:variable  {:  if(modoDepuracion) System.out.println("\t regla 13a");
-				RESULT= new NodoIdentificadorInt(variable.toString());;
+				RESULT= new NodoIdentificadorInt(variable.toString());
                                         :}
                 | TIPOBOOL ID:variable  {:  if(modoDepuracion) System.out.println("\t regla 13b");
-				RESULT= new NodoIdentificadorBool(variable.toString());;
+				RESULT= new NodoIdentificadorBool(variable.toString());
                                         :}
                 | TIPOENTERO ID:variable LCOR exp:ex RCOR {: if(modoDepuracion) System.out.println("\t regla 13c");
                                 RESULT= new NodoIdentificadorInt(variable.toString(),ex);
