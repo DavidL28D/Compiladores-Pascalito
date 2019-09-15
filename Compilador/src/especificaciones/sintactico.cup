@@ -62,7 +62,7 @@ non terminal NodoBase exp;
 non terminal NodoBase simple_exp;
 non terminal NodoBase term;
 non terminal NodoBase factor;
-non terminal declaracion;
+non terminal NodoBase declaracion;
 
 
 /* Precedencia de operadores */
@@ -247,7 +247,7 @@ factor  ::= LPAREN exp:ex RPAREN	{: if(modoDepuracion) System.out.println("\t re
 						System.out.println("Ocurrio error en cup # 0005");
 					}
 					:}
-		| NOT factor:exD   {: if(modoDepuracion) System.out.println("\t regla 12e); 
+		| NOT factor:exD   {: if(modoDepuracion) System.out.println("\t regla 12e"); 
                                     RESULT = new NodoOperacion(tipoOp.not,exD);
                                 :}
 		| error	{: if(modoDepuracion) System.out.println("\t regla 12f"); 

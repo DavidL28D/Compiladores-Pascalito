@@ -9,7 +9,7 @@ package ast;
  *
  * @author thestrength
  */
-public class NodoBool {
+public class NodoBool extends NodoBase{
     	private Boolean valor;
 
 	public NodoBool(Boolean valor) {
