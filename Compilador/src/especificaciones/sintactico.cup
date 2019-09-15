@@ -26,6 +26,7 @@ terminal READ;
 terminal WRITE;
 terminal String ID;
 terminal Integer NUM;
+terminal Boolean BOOL;
 terminal ASSIGN;
 terminal EQ;
 terminal LT;
@@ -43,6 +44,10 @@ terminal LCOR;
 terminal RCOR;
 terminal SEMI;
 terminal MOD;
+terminal AND;
+terminal OR;
+terminal NOT;
+terminal TIPOENTERO, TIPOBOOL;
 
 /* Simbolos No Terminales */
 non terminal program;
@@ -57,7 +62,7 @@ non terminal NodoBase exp;
 non terminal NodoBase simple_exp;
 non terminal NodoBase term;
 non terminal NodoBase factor;
-
+non terminal declaracion;
 
 
 /* Precedencia de operadores */
@@ -109,6 +114,9 @@ stmt        ::= if_stmt:sif	{: if(modoDepuracion) System.out.println("\t regla 3
 				System.out.println("Ocurrio error en cup # 0004");
 				RESULT=null;
 				:}
+            | declaracion:dec   {: if(modoDepuracion) System.out.println("\t regla 3g"); 
+					RESULT=dec;
+                                :}
             ;
 
 if_stmt     ::= IF exp:ex THEN stmt_seq:pthen END	{: if(modoDepuracion) System.out.println("\t regla 4a"); 
@@ -178,32 +186,38 @@ exp         ::= simple_exp:exI LT simple_exp:exD	{: if(modoDepuracion) System.ou
                                         :}
                 ;
 
-simple_exp  ::= simple_exp:exI MOD term:exD	{: if(modoDepuracion) System.out.println("\t regla 10a"); 
-							RESULT = new NodoOperacion(exI,tipoOp.mod,exD);
-							:}
-		|simple_exp:exI PLUS term:exD	{: if(modoDepuracion) System.out.println("\t regla 10b"); 
+simple_exp  ::= simple_exp:exI PLUS term:exD	{: if(modoDepuracion) System.out.println("\t regla 10b"); 
 							RESULT = new NodoOperacion(exI,tipoOp.mas,exD);
 							:}
 		| simple_exp:exI MINUS term:exD	{: if(modoDepuracion) System.out.println("\t regla 10c"); 
 							RESULT = new NodoOperacion(exI,tipoOp.menos,exD);
 							:}
-		| term:ex	{: if(modoDepuracion) System.out.println("\t regla 10d"); 
-				RESULT=ex;
-				:}
+		| simple_exp:exI OR term:exD     {: if(modoDepuracion) System.out.println("\t regla 10d"); 
+                                                RESULT = new NodoOperacion(exI,tipoOp.or,exD);
+                                            :}
+        | term:ex	{: if(modoDepuracion) System.out.println("\t regla 10e"); 
+						RESULT=ex;
+					:}
 		;
 
-term        ::= term:exI TIMES factor:exD	{: if(modoDepuracion) System.out.println("\t regla 11a"); 
+term    ::= term:exI AND factor:exD  {: if(modoDepuracion) System.out.println("\t regla 11a"); 
+                                                RESULT = new NodoOperacion(exI,tipoOp.and,exD);
+                                            :}
+        | term:exI TIMES factor:exD	{: if(modoDepuracion) System.out.println("\t regla 11b"); 
 							RESULT = new NodoOperacion(exI,tipoOp.por,exD);
 							:}
-		| term:exI OVER factor:exD	{: if(modoDepuracion) System.out.println("\t regla 11b"); 
+		| term:exI OVER factor:exD	{: if(modoDepuracion) System.out.println("\t regla 11c"); 
 						RESULT = new NodoOperacion(exI,tipoOp.entre,exD);
 						:}
-		| factor:ex	{: if(modoDepuracion) System.out.println("\t regla 11c"); 
+		| term:exI MOD factor:exD	{: if(modoDepuracion) System.out.println("\t regla 10a"); 
+							RESULT = new NodoOperacion(exI,tipoOp.mod,exD);
+							:}
+		| factor:ex	{: if(modoDepuracion) System.out.println("\t regla 11d"); 
 					RESULT=ex;
 					:}
 		;
 
-factor      ::= LPAREN exp:ex RPAREN	{: if(modoDepuracion) System.out.println("\t regla 12a"); 
+factor  ::= LPAREN exp:ex RPAREN	{: if(modoDepuracion) System.out.println("\t regla 12a"); 
 							RESULT = ex;
 							:}
 		| NUM:valor	{: if(modoDepuracion) System.out.println("\t regla 12b"); 
@@ -215,7 +229,16 @@ factor      ::= LPAREN exp:ex RPAREN	{: if(modoDepuracion) System.out.println("\
 						System.out.println("Ocurrio error en cup # 0005");
 					}
 					:}
-		| ID:variable	{: if(modoDepuracion) System.out.println("\t regla 12c"); 
+		| BOOL:valor	{: if(modoDepuracion) System.out.println("\t regla 12c"); 
+					System.out.println("Devolvi nodo booleano");
+					if(valor!=null){
+						RESULT= new NodoBool(valor);					
+					}else{
+						RESULT = null;
+						System.out.println("Ocurrio error en cup # 0005");
+					}
+					:}
+		| ID:variable	{: if(modoDepuracion) System.out.println("\t regla 12d"); 
 					if(variable!=null){
 						System.out.println("Construyendo Nodo ID para Lexema: "+ variable.toString());
 						RESULT= new NodoIdentificador(variable.toString());		
@@ -224,8 +247,19 @@ factor      ::= LPAREN exp:ex RPAREN	{: if(modoDepuracion) System.out.println("\
 						System.out.println("Ocurrio error en cup # 0005");
 					}
 					:}
-		| error	{: if(modoDepuracion) System.out.println("\t regla 12d"); 
+		| NOT factor:exD   {: if(modoDepuracion) System.out.println("\t regla 12e); 
+                                    RESULT = new NodoOperacion(tipoOp.not,exD);
+                                :}
+		| error	{: if(modoDepuracion) System.out.println("\t regla 12f"); 
 				System.out.println("Ocurrio error en cup # 0003");
 				RESULT=null;
 				:}
 		;
+
+declaracion ::= TIPOENTERO ID:variable  {:  if(modoDepuracion) System.out.println("\t regla 13a");
+				RESULT= new NodoIdentificadorInt(variable.toString());;
+                                        :}
+                | TIPOBOOL ID:variable  {:  if(modoDepuracion) System.out.println("\t regla 13b");
+				RESULT= new NodoIdentificadorBool(variable.toString());;
+                                        :}
+                ;

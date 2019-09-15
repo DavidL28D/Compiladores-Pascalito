@@ -120,6 +120,15 @@ espacio		= [ \t]+
 "]"             {       if(debug) System.out.println("token RCOR");
                         return sf.newSymbol("RCOR",sym.RCOR);
                         }
+"and"             {       if(debug) System.out.println("token AND");
+                        return sf.newSymbol("AND",sym.AND);
+                        }
+"or"             {       if(debug) System.out.println("token OR");
+                        return sf.newSymbol("OR",sym.OR);
+                        }
+"not"             {       if(debug) System.out.println("token NOT");
+                        return sf.newSymbol("NOT",sym.NOT);
+                        }
 
 {numero}        {	if(debug) System.out.println("token NUM");
 			return sf.newSymbol("NUM",sym.NUM,new Integer(yytext()));

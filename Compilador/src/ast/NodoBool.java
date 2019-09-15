@@ -10,9 +10,9 @@ package ast;
  * @author thestrength
  */
 public class NodoBool {
-    	private Integer valor;
+    	private Boolean valor;
 
-	public NodoBool(Integer valor) {
+	public NodoBool(Boolean valor) {
 		super();
 		this.valor = valor;
 	}
@@ -21,7 +21,7 @@ public class NodoBool {
 		super();
 	}
 	
-	public Integer getValor() {
+	public Boolean getValor() {
 		return valor;
 	}
 
