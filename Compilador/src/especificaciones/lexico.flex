@@ -129,6 +129,13 @@ espacio		= [ \t]+
 "not"             {       if(debug) System.out.println("token NOT");
                         return sf.newSymbol("NOT",sym.NOT);
                         }
+"int"             {       if(debug) System.out.println("token TIPOENTERO");
+                        return sf.newSymbol("TIPOENTERO",sym.TIPOENTERO);
+                        }
+
+"bool"             {       if(debug) System.out.println("token TIPOBOOL");
+                        return sf.newSymbol("TIPOBOOL",sym.TIPOBOOL);
+                        }
 
 {numero}        {	if(debug) System.out.println("token NUM");
 			return sf.newSymbol("NUM",sym.NUM,new Integer(yytext()));
