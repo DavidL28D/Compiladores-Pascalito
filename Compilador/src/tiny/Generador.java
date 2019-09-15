@@ -71,8 +71,10 @@ public class Generador {
 			generarEscribir(nodo);
 		}else if (nodo instanceof NodoValor){
 			generarValor(nodo);
-		}else if (nodo instanceof NodoIdentificador){
-			generarIdentificador(nodo);
+		}else if (nodo instanceof NodoIdentificadorInt){
+			generarIdentificadorInt(nodo);
+		}else if (nodo instanceof NodoIdentificadorBool){
+			generarIdentificadorBool(nodo);
 		}else if (nodo instanceof NodoOperacion){
 			generarOperacion(nodo);
 		}else{
@@ -166,16 +168,25 @@ public class Generador {
     	UtGen.emitirRM("LDC", UtGen.AC, n.getValor(), 0, "cargar constante: "+n.getValor().toString());
     	if(UtGen.debug)	UtGen.emitirComentario("<- constante");
 	}
-	
-	private static void generarIdentificador(NodoBase nodo){
-		NodoIdentificador n = (NodoIdentificador)nodo;
-		int direccion;
-		if(UtGen.debug)	UtGen.emitirComentario("-> identificador");
-		direccion = tablaSimbolos.getDireccion(n.getNombre());
-		UtGen.emitirRM("LD", UtGen.AC, direccion, UtGen.GP, "cargar valor de identificador: "+n.getNombre());
-		if(UtGen.debug)	UtGen.emitirComentario("-> identificador");
-	}
-
+	        
+        private static void generarIdentificadorInt(NodoBase nodo){
+            NodoIdentificadorInt n = (NodoIdentificadorInt)nodo;
+            int direccion;
+            if(UtGen.debug)	UtGen.emitirComentario("-> identificador int");
+            direccion = tablaSimbolos.getDireccion(n.getNombre());
+            UtGen.emitirRM("LD", UtGen.AC, direccion, UtGen.GP, "cargar valor de identificador int: "+n.getNombre());
+            if(UtGen.debug)	UtGen.emitirComentario("-> identificador int");
+        }
+        
+        private static void generarIdentificadorBool(NodoBase nodo){
+            NodoIdentificadorBool n = (NodoIdentificadorBool)nodo;
+            int direccion;
+            if(UtGen.debug)	UtGen.emitirComentario("-> identificador bool");
+            direccion = tablaSimbolos.getDireccion(n.getNombre());
+            UtGen.emitirRM("LD", UtGen.AC, direccion, UtGen.GP, "cargar valor de identificador bool: "+n.getNombre());
+            if(UtGen.debug)	UtGen.emitirComentario("-> identificador bool");
+        }
+        
 	private static void generarOperacion(NodoBase nodo){
 		NodoOperacion n = (NodoOperacion) nodo;
 		if(UtGen.debug)	UtGen.emitirComentario("-> Operacion: " + n.getOperacion());

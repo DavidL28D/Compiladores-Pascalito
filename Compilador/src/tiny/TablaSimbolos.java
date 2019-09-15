@@ -7,6 +7,8 @@ import ast.NodoAsignacion;
 import ast.NodoBase;
 import ast.NodoEscribir;
 import ast.NodoIdentificador;
+import ast.NodoIdentificadorBool;
+import ast.NodoIdentificadorInt;
 import ast.NodoIf;
 import ast.NodoOperacion;
 import ast.NodoRepeat;
@@ -23,8 +25,12 @@ public class TablaSimbolos {
 
 	public void cargarTabla(NodoBase raiz){
 		while (raiz != null) {
-	    if (raiz instanceof NodoIdentificador){
-	    	InsertarSimbolo(((NodoIdentificador)raiz).getNombre(),-1);
+	    if (raiz instanceof NodoIdentificadorBool){
+	    	InsertarSimbolo(((NodoIdentificador)raiz).getNombre(),-1,"bool");
+	    	//TODO: A�adir el numero de linea y localidad de memoria correcta
+	    }
+            if (raiz instanceof NodoIdentificadorInt){
+	    	InsertarSimbolo(((NodoIdentificador)raiz).getNombre(),-1,"int");
 	    	//TODO: A�adir el numero de linea y localidad de memoria correcta
 	    }
 
@@ -53,12 +59,12 @@ public class TablaSimbolos {
 	}
 	
 	//true es nuevo no existe se insertara, false ya existe NO se vuelve a insertar 
-	public boolean InsertarSimbolo(String identificador, int numLinea){
+	public boolean InsertarSimbolo(String identificador, int numLinea, String tipo){
 		RegistroSimbolo simbolo;
 		if(tabla.containsKey(identificador)){
 			return false;
 		}else{
-			simbolo= new RegistroSimbolo(identificador,numLinea,direccion++);
+			simbolo= new RegistroSimbolo(identificador,numLinea,direccion++,tipo);
 			tabla.put(identificador,simbolo);
 			return true;			
 		}
