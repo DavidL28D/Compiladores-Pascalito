@@ -262,4 +262,10 @@ declaracion ::= TIPOENTERO ID:variable  {:  if(modoDepuracion) System.out.printl
                 | TIPOBOOL ID:variable  {:  if(modoDepuracion) System.out.println("\t regla 13b");
 				RESULT= new NodoIdentificadorBool(variable.toString());;
                                         :}
+                | TIPOENTERO ID:variable LCOR exp:ex RCOR {: if(modoDepuracion) System.out.println("\t regla 13c");
+                                RESULT= new NodoIdentificadorInt(variable.toString(),ex);
+                                        :}
+                | TIPOBOOL ID:variable LCOR exp:ex RCOR {: if(modoDepuracion) System.out.println("\t regla 13d");
+                                RESULT= new NodoIdentificadorBool(variable.toString(),ex);
+                                        :}
                 ;
