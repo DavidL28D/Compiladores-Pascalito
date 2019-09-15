@@ -22,6 +22,8 @@ terminal ELSE;
 terminal END;
 terminal REPEAT;
 terminal UNTIL;
+terminal WHILE;
+terminal DO;
 terminal READ;
 terminal WRITE;
 terminal String ID;
@@ -57,6 +59,7 @@ non terminal NodoBase exp;
 non terminal NodoBase simple_exp;
 non terminal NodoBase term;
 non terminal NodoBase factor;
+non terminal NodoBase while_stmt;
 
 
 
@@ -94,18 +97,21 @@ stmt        ::= if_stmt:sif	{: if(modoDepuracion) System.out.println("\t regla 3
 					RESULT=sif;
 					:}
             | repeat_stmt:srep	{: if(modoDepuracion) System.out.println("\t regla 3b"); 
-						RESULT=srep;
+					RESULT=srep;
 						:}
-            | assign_stmt:sasi	{: if(modoDepuracion) System.out.println("\t regla 3c"); 
-						RESULT=sasi;
+            | while_stmt:smien {: if(modoDepuracion) System.out.println("\t regla 3c");
+					RESULT=smien;
 						:}
-            | read_stmt:slec	{: if(modoDepuracion) System.out.println("\t regla 3d"); 
+            | assign_stmt:sasi	{: if(modoDepuracion) System.out.println("\t regla 3d"); 
+					RESULT=sasi;
+						:}
+            | read_stmt:slec	{: if(modoDepuracion) System.out.println("\t regla 3e"); 
 					RESULT=slec;
 					:}
-            | write_stmt:sesc	{: if(modoDepuracion) System.out.println("\t regla 3e"); 
+            | write_stmt:sesc	{: if(modoDepuracion) System.out.println("\t regla 3f"); 
 					RESULT=sesc;
 					:}
-            | error	{: if(modoDepuracion) System.out.println("\t regla 3f"); 
+            | error	{: if(modoDepuracion) System.out.println("\t regla 3g"); 
 				System.out.println("Ocurrio error en cup # 0004");
 				RESULT=null;
 				:}
@@ -123,6 +129,11 @@ repeat_stmt ::= REPEAT stmt_seq:cuerpo UNTIL exp:prueba	{: if(modoDepuracion) Sy
 							RESULT = new NodoRepeat(cuerpo,prueba);
 							:}
 		;
+while_stmt ::= WHILE exp:condicion DO stmt_seq:cuerpo END {: if(modoDepuracion) System.out.println("\t regla 6");
+							RESULT = new NodoWhile(condicion,cuerpo);
+							:}
+		;
+
 
 assign_stmt ::= ID:variable 	{: if(modoDepuracion) System.out.println("\t regla 6 parte del medio"); 
 				/*lineanum=1000; //Pasar/Obtener la linea correcta por el Simbolo

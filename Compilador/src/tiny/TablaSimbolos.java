@@ -10,6 +10,7 @@ import ast.NodoIdentificador;
 import ast.NodoIf;
 import ast.NodoOperacion;
 import ast.NodoRepeat;
+import ast.NodoWhile;
 
 public class TablaSimbolos {
 	private HashMap<String, RegistroSimbolo> tabla;
@@ -39,7 +40,10 @@ public class TablaSimbolos {
 	    else if (raiz instanceof  NodoRepeat){
 	    	cargarTabla(((NodoRepeat)raiz).getCuerpo());
 	    	cargarTabla(((NodoRepeat)raiz).getPrueba());
-	    }
+	    }else if(raiz instanceof NodoWhile){
+                cargarTabla(((NodoWhile)raiz).getCondicion());
+                cargarTabla(((NodoWhile)raiz).getCuerpo());
+            }
 	    else if (raiz instanceof  NodoAsignacion)
 	    	cargarTabla(((NodoAsignacion)raiz).getExpresion());
 	    else if (raiz instanceof  NodoEscribir)
