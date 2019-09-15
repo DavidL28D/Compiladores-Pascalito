@@ -2,25 +2,25 @@ package ast;
 
 public class NodoIdentificadorInt extends NodoIdentificador {
     
-    private NodoBase expresion;
+    int size;
     
     public NodoIdentificadorInt(String nombre){
         super(nombre);
-        this.expresion = null;
+        this.size = 0;
     }
     
     
-    public NodoIdentificadorInt(String nombre,NodoBase ex){
+    public NodoIdentificadorInt(String nombre,int size){
         super(nombre);
-        this.expresion = ex;
+        this.size = size;
     }
 
-    public NodoBase getExpresion() {
-        return expresion;
+    public int getSize() {
+        return size;
     }
 
-    public void setExpresion(NodoBase expresion) {
-        this.expresion = expresion;
+    public void setExpresion(int size) {
+        this.size = size;
     }
 
 }

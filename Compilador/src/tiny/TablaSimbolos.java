@@ -28,11 +28,16 @@ public class TablaSimbolos {
 	public void cargarTabla(NodoBase raiz){
             while (raiz != null) {
 	    if (raiz instanceof NodoIdentificadorBool){
-	    	InsertarSimbolo(((NodoIdentificador)raiz).getNombre(),-1,"bool");
+                NodoIdentificadorBool nodo = (NodoIdentificadorBool)raiz;
+                
+                InsertarSimbolo(nodo.getNombre(),-1,"bool",nodo.getSize());
+	    	
 	    	//TODO: A�adir el numero de linea y localidad de memoria correcta
 	    }
             if (raiz instanceof NodoIdentificadorInt){
-	    	InsertarSimbolo(((NodoIdentificador)raiz).getNombre(),-1,"int");
+                NodoIdentificadorInt nodo = (NodoIdentificadorInt)raiz;
+                
+	    	InsertarSimbolo(nodo.getNombre(),-1,"int",nodo.getSize());
 	    	//TODO: A�adir el numero de linea y localidad de memoria correcta
 	    }
 
@@ -70,14 +75,27 @@ public class TablaSimbolos {
         }	
 	
 	//true es nuevo no existe se insertara, false ya existe NO se vuelve a insertar 
-	public boolean InsertarSimbolo(String identificador, int numLinea, String tipo){
+	public boolean InsertarSimbolo(String identificador, int numLinea, String tipo, int size){
 		RegistroSimbolo simbolo;
+                if(size > 0){
+                    identificador = identificador + "[]";
+                }
 		if(tabla.containsKey(identificador)){
 			return false;
 		}else{
-			simbolo= new RegistroSimbolo(identificador,numLinea,direccion++,tipo);
-			tabla.put(identificador,simbolo);
-			return true;			
+                        System.out.println("Agregando: " + identificador);
+                        if(size > 0){
+                            for(int i = 0; i < size; i++){
+                                simbolo= new RegistroSimbolo(identificador,numLinea,direccion++,tipo,size);
+                                tabla.put(identificador, simbolo);
+                            }    
+                        }else{
+                                simbolo= new RegistroSimbolo(identificador,numLinea,direccion++,tipo,size);
+                                tabla.put(identificador, simbolo);
+                        }
+                        
+                    
+                    return true;
 		}
 	}
 	
@@ -97,7 +115,9 @@ public class TablaSimbolos {
 	public int getDireccion(String Clave){
 		return BuscarSimbolo(Clave).getDireccionMemoria();
 	}
-	
+	public int getSize(String Clave){
+                return BuscarSimbolo(Clave).getSize();
+        }
 	/*
 	 * TODO:
 	 * 1. Crear lista con las lineas de codigo donde la variable es usada.

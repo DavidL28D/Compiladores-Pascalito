@@ -176,7 +176,16 @@ public class Generador {
 		/* Genero el codigo para la expresion a la derecha de la asignacion */
 		generar(n.getExpresion());
 		/* Ahora almaceno el valor resultante */
-		direccion = tablaSimbolos.getDireccion(n.getIdentificador());
+                
+                
+                
+                if(n.getSize()>0){
+                    n.setIdentificador(n.getIdentificador()+"[]");
+                     direccion = tablaSimbolos.getDireccion(n.getIdentificador()) -(tablaSimbolos.getSize(n.getIdentificador()) - 1) + n.getSize();
+                }else{
+                    direccion = tablaSimbolos.getDireccion(n.getIdentificador());
+                }
+		
 		UtGen.emitirRM("ST", UtGen.AC, direccion, UtGen.GP, "asignacion: almaceno el valor para el id "+n.getIdentificador());
 		if(UtGen.debug)	UtGen.emitirComentario("<- asignacion");
 	}
@@ -211,9 +220,20 @@ public class Generador {
         private static void generarIdentificadorInt(NodoBase nodo){
             NodoIdentificadorInt n = (NodoIdentificadorInt)nodo;
             int direccion;
+            String nombre = n.getNombre();
             if(UtGen.debug)	UtGen.emitirComentario("-> identificador int");
-            direccion = tablaSimbolos.getDireccion(n.getNombre());
-            UtGen.emitirRM("LD", UtGen.AC, direccion, UtGen.GP, "cargar valor de identificador int: "+n.getNombre());
+            
+            if(n.getSize() > 0){
+                nombre = nombre + "[]";
+                direccion = tablaSimbolos.getDireccion(nombre) -(tablaSimbolos.getSize(nombre) - 1) + n.getSize();
+            }else{
+                direccion = tablaSimbolos.getDireccion(nombre);
+            }
+
+            
+            
+ 
+            UtGen.emitirRM("LD", UtGen.AC, direccion, UtGen.GP, "cargar valor de identificador int: "+nombre+"["+n.getSize()+"]");
             if(UtGen.debug)	UtGen.emitirComentario("-> identificador int");
         }
         

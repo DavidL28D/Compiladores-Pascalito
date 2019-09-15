@@ -5,14 +5,16 @@ public class RegistroSimbolo {
 	private int NumLinea;
 	private int DireccionMemoria;
         private String tipo;
+        private int size;
 	
 	public RegistroSimbolo(String identificador, int numLinea,
-			int direccionMemoria, String tipo) {
+			int direccionMemoria, String tipo, int size) {
 		super();
 		this.identificador = identificador;
 		NumLinea = numLinea;
 		DireccionMemoria = direccionMemoria;
                 this.tipo = tipo;
+                this.size = size;
 	}
 
 	public String getIdentificador() {
@@ -38,5 +40,13 @@ public class RegistroSimbolo {
         public void setTipo(String tipo) {
             this.tipo = tipo;
         }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
         
 }

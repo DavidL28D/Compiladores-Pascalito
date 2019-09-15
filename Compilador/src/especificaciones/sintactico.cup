@@ -160,12 +160,26 @@ assign_stmt ::= ID:variable 	{: if(modoDepuracion) System.out.println("\t regla 
 				:}
 			ASSIGN exp:ex	{: if(modoDepuracion) System.out.println("\t regla 6 parte final");
 					if(variable!=null)
-					RESULT = new NodoAsignacion(variable.toString(),ex);
+					RESULT = new NodoAsignacion(variable.toString(),ex,0);
 					else{
 					RESULT = null;
 					System.out.println("Ocurrio error en cup # 0001");
 					}
 					:}
+                |   ID:variable LCOR NUM:n RCOR {: if(modoDepuracion) System.out.println("\t regla 6 parte del medio"); 
+				/*lineanum=1000; //Pasar/Obtener la linea correcta por el Simbolo
+				String nombre = variable.getName();*/
+				:}
+                        ASSIGN exp:ex {:  if(modoDepuracion) System.out.println("\t regla 6 parte final");
+                                        if(variable!=null)
+					RESULT = new NodoAsignacion(variable.toString(),ex,n);
+					else{
+					RESULT = null;
+					System.out.println("Ocurrio error en cup # 0001");
+                                        }
+                                      :}
+                    
+                     
 		;
 
 read_stmt   ::= READ ID:variable	{: if(modoDepuracion) System.out.println("\t regla 7"); 
@@ -284,10 +298,10 @@ declaracion ::= TIPOENTERO ID:variable  {:  if(modoDepuracion) System.out.printl
                 | TIPOBOOL ID:variable  {:  if(modoDepuracion) System.out.println("\t regla 13b");
 				RESULT= new NodoIdentificadorBool(variable.toString());
                                         :}
-                | TIPOENTERO ID:variable LCOR exp:ex RCOR {: if(modoDepuracion) System.out.println("\t regla 13c");
-                                RESULT= new NodoIdentificadorInt(variable.toString(),ex);
+                | TIPOENTERO ID:variable LCOR NUM:n RCOR {: if(modoDepuracion) System.out.println("\t regla 13c");
+                                RESULT= new NodoIdentificadorInt(variable.toString(),n);
                                         :}
-                | TIPOBOOL ID:variable LCOR exp:ex RCOR {: if(modoDepuracion) System.out.println("\t regla 13d");
-                                RESULT= new NodoIdentificadorBool(variable.toString(),ex);
+                | TIPOBOOL ID:variable LCOR NUM:n RCOR {: if(modoDepuracion) System.out.println("\t regla 13d");
+                                RESULT= new NodoIdentificadorBool(variable.toString(),n);
                                         :}
                 ;
