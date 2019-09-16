@@ -84,7 +84,7 @@ public class Generador {
 		}else if (nodo instanceof NodoWhile){
             generarWhile(nodo);
         }else if (nodo instanceof NodoIdentificador){
-            generarIdentificador(nodo);
+                    generarIdentificador(nodo);
 		}else{
 			System.out.println("BUG: Tipo de nodo a generar desconocido");
 		}
@@ -183,15 +183,16 @@ public class Generador {
                 String tipo;
 		if(UtGen.debug)	UtGen.emitirComentario("-> asignacion");		
 		/* Genero el codigo para la expresion a la derecha de la asignacion */
-                generar(n.getExpresion());
+                //generar(n.getExpresion());
 		/* Ahora almaceno el valor resultante */
                 if(n.getExpresion2() != null){
+                    generar(n.getExpresion2());
                     NodoValor v = (NodoValor)n.getExpresion2();
                     valor = v.getValor();
                 }else{
                     valor = 0;
                 }
-
+                generar(n.getExpresion());
                 if(n.getExpresion2()!= null){
                      n.setIdentificador(n.getIdentificador()+"[]");
                      direccion = tablaSimbolos.getDireccion(n.getIdentificador()) -(tablaSimbolos.getSize(n.getIdentificador()) - 1) + valor;
@@ -273,15 +274,23 @@ public class Generador {
     	if(UtGen.debug)	UtGen.emitirComentario("<- constante");
 	}
         
+        @SuppressWarnings("empty-statement")
         private static void generarIdentificador(NodoBase nodo){
             NodoIdentificador n = (NodoIdentificador)nodo;
             String tipo;
             int size;
-           
-            tipo = tablaSimbolos.getTipo(n.getNombre());
-            size = tablaSimbolos.getSize(n.getNombre());
+            
+            if(tablaSimbolos.BuscarSimbolo(n.getNombre()) == null){
+                tipo = tablaSimbolos.getTipo(n.getNombre()+"[]");
+                size = tablaSimbolos.getSize(n.getNombre()+"[]");
+            }else{
+                tipo = tablaSimbolos.getTipo(n.getNombre());
+                size = tablaSimbolos.getSize(n.getNombre());
+            }
+            
+            
+            
             if(tipo.equals("int")){
-                
                 generarIdentificadorInt(n,size);
             }else if(tipo.equals("bool")){                
                 generarIdentificadorBool(n,size);            
@@ -292,9 +301,9 @@ public class Generador {
             int direccion;
             String nombre = nodo.getNombre();
             if(UtGen.debug)	UtGen.emitirComentario("-> identificador int");
-            
             if(size > 0){
-                nombre = nombre + "[]";
+               nombre = nombre + "[]";
+                
                 direccion = tablaSimbolos.getDireccion(nombre) -(tablaSimbolos.getSize(nombre) - 1) + size;
             }else{
                 direccion = tablaSimbolos.getDireccion(nombre);
