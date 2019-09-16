@@ -73,14 +73,18 @@ public class Generador {
 			generarEscribir(nodo);
 		}else if (nodo instanceof NodoValor){
 			generarValor(nodo);
-		}else if (nodo instanceof NodoIdentificadorInt){
-			generarIdentificadorInt(nodo);
+		}else if (nodo instanceof NodoBool){
+			generarBool(nodo);
+		}/*else if (nodo instanceof NodoIdentificadorInt){
+			generarIdentificadorInt((NodoIdentificador)nodo);
 		}else if (nodo instanceof NodoIdentificadorBool){
-			generarIdentificadorBool(nodo);
-		}else if (nodo instanceof NodoOperacion){
+			generarIdentificadorBool((NodoIdentificador)nodo);
+		}*/else if (nodo instanceof NodoOperacion){
 			generarOperacion(nodo);
 		}else if (nodo instanceof NodoWhile){
-            generarWhile(nodo);
+                    generarWhile(nodo);
+                }else if (nodo instanceof NodoIdentificador){
+                    generarIdentificador(nodo);
         }else if (nodo instanceof NodoOperacion){
 			generarOperacion(nodo);
 		}else{
@@ -171,13 +175,32 @@ public class Generador {
 	
 	private static void generarAsignacion(NodoBase nodo){
 		NodoAsignacion n = (NodoAsignacion)nodo;
-		int direccion;
+		int direccion, valor;
+                String tipo;
 		if(UtGen.debug)	UtGen.emitirComentario("-> asignacion");		
 		/* Genero el codigo para la expresion a la derecha de la asignacion */
-		generar(n.getExpresion());
+                generar(n.getExpresion());
 		/* Ahora almaceno el valor resultante */
 		direccion = tablaSimbolos.getDireccion(n.getIdentificador());
-		UtGen.emitirRM("ST", UtGen.AC, direccion, UtGen.GP, "asignacion: almaceno el valor para el id "+n.getIdentificador());
+                tipo = tablaSimbolos.getTipo(n.getIdentificador());
+                
+                if(tipo.equals("bool")){
+                    UtGen.emitirRM("LDC", UtGen.AC1, 0, UtGen.AC, "Carga constante 0");
+                    UtGen.emitirRM("LDC", 2, 1, UtGen.AC, "Carga constante 1");
+                    UtGen.emitirRM("ST", UtGen.AC, direccion, UtGen.GP, "asignacion: almaceno el valor para el id "+n.getIdentificador());
+                    UtGen.emitirRO("SUB", UtGen.AC1, UtGen.AC, UtGen.AC1, "Resta valor - 0");
+                    UtGen.emitirRM("JNE", UtGen.AC1, 2, UtGen.PC, " Voy dos instrucciones mas alla del if verdadero (AC1<>0)");
+                    UtGen.emitirRM("ST", UtGen.AC, direccion, UtGen.GP, "asignacion: almaceno el valor para el id "+n.getIdentificador());
+                    UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "Salto incondicional a direccion PC+1");
+                    UtGen.emitirRO("SUB", UtGen.AC1, UtGen.AC , 2, "Resta valor - 1");
+                    UtGen.emitirRM("JNE", UtGen.AC1, 2, UtGen.PC, " Voy dos instrucciones mas alla del if verdadero (AC<>0)");
+                    UtGen.emitirRM("ST", UtGen.AC, direccion, UtGen.GP, "asignacion: almaceno el valor para el id "+n.getIdentificador());
+                    UtGen.emitirRM("LDA", UtGen.PC, 1, UtGen.PC, "Salto incondicional a direccion PC+1");
+                    UtGen.emitirRO("HALT", 0, 0, 0, "Fin de programa -> Error en asignacion a Booleanos");
+                    //generar error
+                }else{
+                    UtGen.emitirRM("ST", UtGen.AC, direccion, UtGen.GP, "asignacion: almaceno el valor para el id "+n.getIdentificador());
+                }
 		if(UtGen.debug)	UtGen.emitirComentario("<- asignacion");
 	}
 	
@@ -202,27 +225,44 @@ public class Generador {
 	}
 	
 	private static void generarValor(NodoBase nodo){
-    	NodoValor n = (NodoValor)nodo;
+            NodoValor n = (NodoValor)nodo;
+            if(UtGen.debug)	UtGen.emitirComentario("-> constante");
+            UtGen.emitirRM("LDC", UtGen.AC, n.getValor(), 0, "cargar constante: "+n.getValor().toString());
+            if(UtGen.debug)	UtGen.emitirComentario("<- constante");
+	}
+	 
+        private static void generarBool(NodoBase nodo){
+    	NodoBool n = (NodoBool)nodo;
     	if(UtGen.debug)	UtGen.emitirComentario("-> constante");
-    	UtGen.emitirRM("LDC", UtGen.AC, n.getValor(), 0, "cargar constante: "+n.getValor().toString());
+    	UtGen.emitirRM("LDC", UtGen.AC, n.getValor() , 0, "cargar constante: "+n.getValor());
     	if(UtGen.debug)	UtGen.emitirComentario("<- constante");
 	}
-	        
-        private static void generarIdentificadorInt(NodoBase nodo){
-            NodoIdentificadorInt n = (NodoIdentificadorInt)nodo;
+        
+        private static void generarIdentificador(NodoBase nodo){
+            NodoIdentificador n = (NodoIdentificador)nodo;
+            String tipo;
+            
+            tipo = tablaSimbolos.getTipo(n.getNombre());
+            if(tipo.equals("int")){
+                generarIdentificadorInt(n);
+            }else if(tipo.equals("bool")){                
+                generarIdentificadorBool(n);            
+            }
+        }
+        
+        private static void generarIdentificadorInt(NodoIdentificador nodo){
             int direccion;
             if(UtGen.debug)	UtGen.emitirComentario("-> identificador int");
-            direccion = tablaSimbolos.getDireccion(n.getNombre());
-            UtGen.emitirRM("LD", UtGen.AC, direccion, UtGen.GP, "cargar valor de identificador int: "+n.getNombre());
+            direccion = tablaSimbolos.getDireccion(nodo.getNombre());
+            UtGen.emitirRM("LD", UtGen.AC, direccion, UtGen.GP, "cargar valor de identificador int: "+nodo.getNombre());
             if(UtGen.debug)	UtGen.emitirComentario("-> identificador int");
         }
         
-        private static void generarIdentificadorBool(NodoBase nodo){
-            NodoIdentificadorBool n = (NodoIdentificadorBool)nodo;
+        private static void generarIdentificadorBool(NodoIdentificador nodo){
             int direccion;
             if(UtGen.debug)	UtGen.emitirComentario("-> identificador bool");
-            direccion = tablaSimbolos.getDireccion(n.getNombre());
-            UtGen.emitirRM("LD", UtGen.AC, direccion, UtGen.GP, "cargar valor de identificador bool: "+n.getNombre());
+            direccion = tablaSimbolos.getDireccion(nodo.getNombre());
+            UtGen.emitirRM("LD", UtGen.AC, direccion, UtGen.GP, "cargar valor de identificador bool: "+nodo.getNombre());
             if(UtGen.debug)	UtGen.emitirComentario("-> identificador bool");
         }
         

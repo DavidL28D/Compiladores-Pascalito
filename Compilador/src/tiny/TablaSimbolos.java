@@ -97,6 +97,10 @@ public class TablaSimbolos {
 	public int getDireccion(String Clave){
 		return BuscarSimbolo(Clave).getDireccionMemoria();
 	}
+        
+        public String getTipo(String Clave){
+            return BuscarSimbolo(Clave).getTipo();
+	}
 	
 	/*
 	 * TODO:

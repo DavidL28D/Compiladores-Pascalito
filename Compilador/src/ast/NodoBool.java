@@ -10,9 +10,9 @@ package ast;
  * @author thestrength
  */
 public class NodoBool extends NodoBase{
-    	private Boolean valor;
-
-	public NodoBool(Boolean valor) {
+        private int valor;
+        
+	public NodoBool(int valor) {
 		super();
 		this.valor = valor;
 	}
@@ -21,7 +21,7 @@ public class NodoBool extends NodoBase{
 		super();
 	}
 	
-	public Boolean getValor() {
+	public int getValor() {
 		return valor;
 	}
 
