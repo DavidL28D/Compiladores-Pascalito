@@ -167,21 +167,23 @@ public class Generador {
             if(UtGen.debug)	UtGen.emitirComentario("<- For");
 	}
 
-	private static void generarWhile(NodoBase nodo){
+	
+        private static void generarWhile(NodoBase nodo){
             NodoWhile n = (NodoWhile)nodo;
             int localidadSaltoInicio, localidadCondicionWhile,localidadFinal;
             if(UtGen.debug) UtGen.emitirComentario("-> while");
-                localidadSaltoInicio = UtGen.emitirSalto(0);
-                localidadCondicionWhile = UtGen.emitirSalto(1);
-                generar(n.getCondicion());
-                generar(n.getCuerpo());
-                UtGen.emitirRM_Abs("JEQ", UtGen.AC, localidadSaltoInicio, "While: jmp hacia el inicio del cuerpo");
-                localidadFinal = UtGen.emitirSalto(0);
-                UtGen.cargarRespaldo(localidadCondicionWhile);
-                UtGen.emitirRM_Abs("JEQ", UtGen.AC, localidadFinal+1 , "While: jmp hacia el final del cuerpo del while");
-                UtGen.restaurarRespaldo();
+            localidadSaltoInicio = UtGen.emitirSalto(0);	
+            generar(n.getCondicion());
+            localidadCondicionWhile = UtGen.emitirSalto(1);
+            generar(n.getCuerpo());            
+            UtGen.emitirRM_Abs("JNE", UtGen.AC, localidadSaltoInicio, "While: jmp hacia el inicio del cuerpo");
+            localidadFinal = UtGen.emitirSalto(0);
+            UtGen.cargarRespaldo(localidadCondicionWhile);
+            UtGen.emitirRM_Abs("JEQ", UtGen.AC, localidadFinal , "While: jmp hacia el final del cuerpo del while");
+            UtGen.restaurarRespaldo();
             if(UtGen.debug)	UtGen.emitirComentario("<- while");	
-	}			
+	}
+        			
 	
 	private static void generarAsignacion(NodoBase nodo){
 		NodoAsignacion n = (NodoAsignacion)nodo;

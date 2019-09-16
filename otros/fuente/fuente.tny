@@ -4,7 +4,6 @@
 }
 
 {
-
 int modulo;
 int a;
 bool banderita;
@@ -17,16 +16,9 @@ v[0] := 1;
 read v[1];
 v[0] := banderita;
 culo := 3;
-modulo := culo;
-if 1<>2 then
+modulo := culo
 
-    
-    modulo := 4 mod 2
-end 
-
-  
-
-int modulo;
+{int modulo;
 int a;
 bool banderita;
 a := 69;
@@ -35,12 +27,18 @@ modulo := a;
 if 9 <> 7 then
 	write modulo;
 	write banderita
+
+	
 }
 
 
-int numero;
-numero:=0;
-while numero < 4 do
+
+
+	int numero;
+numero:=11;
+while numero < 10 do
 	write numero;
 	numero:=numero+1
 end
+
+
