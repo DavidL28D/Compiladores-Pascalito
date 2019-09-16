@@ -24,7 +24,7 @@ if 1<>2 then
     modulo := 4 mod 2
 end 
 
-}   
+  
 
 int modulo;
 int a;
@@ -35,4 +35,12 @@ modulo := a;
 if 9 <> 7 then
 	write modulo;
 	write banderita
+}
+
+
+int numero;
+numero:=0;
+while numero < 4 do
+	write numero;
+	numero:=numero+1
 end
