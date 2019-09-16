@@ -293,7 +293,17 @@ factor  ::= LPAREN exp:ex RPAREN	{: if(modoDepuracion) System.out.println("\t re
 						System.out.println("Ocurrio error en cup # 0005");
 					}
 					:}
-		| NOT factor:exD   {: if(modoDepuracion) System.out.println("\t regla 12f"); 
+                | /*  ID:variable LCOR NUM:n RCOR {:
+                                                    if(variable!=null){
+                                                            System.out.println("Construyendo Nodo ID para Lexema: "+ variable.toString());
+                                                            RESULT= new NodoIdentificador(variable.toString(),n);
+                                                    }else{
+                                                            RESULT = null;
+                                                            System.out.println("Ocurrio error en cup # 0005"); 
+                                                    }
+                                                 :}
+                    
+		| */ NOT factor:exD   {: if(modoDepuracion) System.out.println("\t regla 12f"); 
                                     RESULT = new NodoOperacion(tipoOp.not,exD);
                                 :}
 		| error	{: if(modoDepuracion) System.out.println("\t regla 12g"); 

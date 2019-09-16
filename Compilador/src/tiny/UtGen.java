@@ -32,7 +32,10 @@ public class UtGen {
 
 	/* Defino al registro[1] como el acumulador 2 */
 	public static int  AC1=1;
-	
+	/* Defino al registro[2] como el acumulador 3 */
+	public static int  AC2=2;
+        /* Defino al registro[3] como el acumulador 4 */
+	public static int  AC3=3;
 	
 	public static void emitirComentario(String c){
 		if(debug) System.out.println("*      "+c);
