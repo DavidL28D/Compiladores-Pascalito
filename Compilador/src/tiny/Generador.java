@@ -141,30 +141,45 @@ public class Generador {
         private static void generarFor(NodoBase nodo){
 
             NodoFor n = (NodoFor)nodo;
-            int localidadSaltoInicio;
+            int localidadSaltoInicio, localidadCondicionFor, localidadFinal;
             if(UtGen.debug)	UtGen.emitirComentario("-> For");
-            localidadSaltoInicio = UtGen.emitirSalto(0);
+            
             UtGen.emitirComentario("For: el salto hacia el final (luego del cuerpo) del for debe estar aqui");
             
-            // Se genera el indice del for
             generar(n.getIndice());
-
-            // Se genera la condicion del for
-            generar(n.getCondicion());
-
-            // Se genera el cuerpo del for
-            generar(n.getCuerpo());
-
-            // Se genera la secuencia del for
-            generar(n.getCc());
             
             NodoAsignacion a = (NodoAsignacion)n.getIndice();
             NodoValor av = (NodoValor)a.getExpresion();
-            int culo = av.getValor();
             
-            System.out.println("Hola*******************"+ av.getValor());
-            UtGen.emitirRM_Abs("JEQ", UtGen.AC, localidadSaltoInicio, "For: jmp hacia el inicio del cuerpo");
+            UtGen.emitirRO("LDC", UtGen.AC1, av.getValor(), UtGen.GP, "1");
+            UtGen.emitirRM("ST", UtGen.AC1, 5, av.getValor(), "2");
+            localidadSaltoInicio = UtGen.emitirSalto(0);
+            
+            generar(n.getCondicion());
+               
+            localidadCondicionFor = UtGen.emitirSalto(7);
+            
+            generar(n.getCc());
+            generar(n.getCuerpo());
+                        
+            NodoValor c = (NodoValor)n.getCc();
+            NodoValor b = (NodoValor)n.getCondicion();
+                      
+            UtGen.emitirRM_Abs("JNE", UtGen.AC, localidadCondicionFor, "For: jmp hacia el inicio del cuerpo");
+            localidadFinal = UtGen.emitirSalto(0);
+    
+            UtGen.emitirRO("LDC", UtGen.AC, c.getValor(), UtGen.GP, "");
+            UtGen.emitirRO("LD", UtGen.AC1, 5, UtGen.GP, "");      
+            UtGen.emitirRO("ADD", UtGen.AC1, UtGen.AC, UtGen.AC1, "");    
+            UtGen.emitirRM("ST", UtGen.AC1, 5, UtGen.GP, "");   
+            UtGen.emitirRO("LDC", UtGen.AC, b.getValor(), UtGen.GP, "");
+            UtGen.emitirRO("SUB", UtGen.AC1, UtGen.AC, UtGen.AC1, "");
+            
+            UtGen.cargarRespaldo(localidadCondicionFor);
+            UtGen.emitirRM_Abs("JEQ", UtGen.AC1, localidadFinal, "For: jmp hacia el final del ciclo");
+            UtGen.restaurarRespaldo();
             if(UtGen.debug)	UtGen.emitirComentario("<- For");
+            
 	}
 
 	

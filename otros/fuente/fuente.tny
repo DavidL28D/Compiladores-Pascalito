@@ -18,7 +18,7 @@ v[0] := banderita;
 culo := 3;
 modulo := culo
 
-{int modulo;
+int modulo;
 int a;
 bool banderita;
 a := 69;
@@ -27,18 +27,12 @@ modulo := a;
 if 9 <> 7 then
 	write modulo;
 	write banderita
-
-	
+end
 }
 
-
-
-
-	int numero;
+int numero;
 numero:=11;
 while numero < 10 do
 	write numero;
 	numero:=numero+1
 end
-
-
