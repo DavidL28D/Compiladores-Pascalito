@@ -28,7 +28,6 @@ terminal READ;
 terminal WRITE;
 terminal String ID;
 terminal Integer NUM;
-terminal Boolean BOOL;
 terminal ASSIGN;
 terminal EQ;
 terminal LT;
@@ -276,8 +275,8 @@ factor  ::= LPAREN exp:ex RPAREN	{: if(modoDepuracion) System.out.println("\t re
 						System.out.println("Ocurrio error en cup # 0005");
 					}
 					:}
-		| BOOL:valor	{: if(modoDepuracion) System.out.println("\t regla 12c"); 
-					System.out.println("Devolvi nodo booleano");
+		| /*BOOL:valor	{: if(modoDepuracion) System.out.println("\t regla 12c"); 
+					System.out.println("Devolvi nodo booleano, valor: "+valor);
 					if(valor!=null){
 						RESULT= new NodoBool(valor);					
 					}else{
@@ -285,7 +284,7 @@ factor  ::= LPAREN exp:ex RPAREN	{: if(modoDepuracion) System.out.println("\t re
 						System.out.println("Ocurrio error en cup # 0005");
 					}
 					:}
-		| ID:variable	{: if(modoDepuracion) System.out.println("\t regla 12d"); 
+		|*/ ID:variable	{: if(modoDepuracion) System.out.println("\t regla 12d"); 
 					if(variable!=null){
 						System.out.println("Construyendo Nodo ID para Lexema: "+ variable.toString());
 						RESULT= new NodoIdentificador(variable.toString());		

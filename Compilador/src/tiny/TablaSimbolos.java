@@ -116,11 +116,19 @@ public class TablaSimbolos {
 	}
 
 	public int getDireccion(String Clave){
+		
 		return BuscarSimbolo(Clave).getDireccionMemoria();
 	}
 	public int getSize(String Clave){
-                return BuscarSimbolo(Clave).getSize();
-        }
+
+        return BuscarSimbolo(Clave).getSize();
+    }
+        
+    public String getTipo(String Clave){
+
+        return BuscarSimbolo(Clave).getTipo();
+	}
+	
 	/*
 	 * TODO:
 	 * 1. Crear lista con las lineas de codigo donde la variable es usada.

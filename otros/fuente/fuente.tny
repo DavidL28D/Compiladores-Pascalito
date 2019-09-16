@@ -3,8 +3,12 @@
   computes factorial
 }
 
+{
+
 int modulo;
+int a;
 bool banderita;
+
 int culo;
 banderita := 1;
 int v[2];
@@ -16,6 +20,19 @@ culo := 3;
 modulo := culo;
 if 1<>2 then
 
-    modulo := 4 mod 2
     
+    modulo := 4 mod 2
+end 
+
+}   
+
+int modulo;
+int a;
+bool banderita;
+a := 69;
+banderita := 0;
+modulo := a;
+if 9 <> 7 then
+	write modulo;
+	write banderita
 end
