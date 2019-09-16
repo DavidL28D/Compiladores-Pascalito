@@ -5,11 +5,15 @@
 
 int modulo;
 bool banderita;
+int culo;
 banderita := 1;
 int v[2];
 int temp;
 v[0] := 1;
 read v[1];
+v[0] := banderita;
+culo := 3;
+modulo := culo;
 if 1<>2 then
 
     modulo := 4 mod 2

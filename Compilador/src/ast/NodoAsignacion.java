@@ -11,6 +11,13 @@ public class NodoAsignacion extends NodoBase {
 		this.expresion = null;
                 this.expresion2 = null;
 	}
+        
+        public NodoAsignacion(String identificador, NodoBase expresion) {
+		super();
+		this.identificador = identificador;
+		this.expresion = expresion;
+                this.expresion2 = null;
+	}
 	
 	public NodoAsignacion(String identificador, NodoBase expresion, NodoBase expresion2) {
 		super();

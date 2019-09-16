@@ -190,12 +190,16 @@ public class Generador {
                     valor = 0;
                 }
                 
+                
+                
                 if(n.getExpresion2()!= null){
-                    n.setIdentificador(n.getIdentificador()+"[]");
+                     n.setIdentificador(n.getIdentificador()+"[]");
                      direccion = tablaSimbolos.getDireccion(n.getIdentificador()) -(tablaSimbolos.getSize(n.getIdentificador()) - 1) + valor;
                 }else{
                     direccion = tablaSimbolos.getDireccion(n.getIdentificador());
                 }
+                
+                
 		
 		UtGen.emitirRM("ST", UtGen.AC, direccion, UtGen.GP, "asignacion: almaceno el valor para el id "+n.getIdentificador());
 		if(UtGen.debug)	UtGen.emitirComentario("<- asignacion");

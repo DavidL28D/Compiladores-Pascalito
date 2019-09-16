@@ -161,7 +161,7 @@ assign_stmt ::= ID:variable 	{: if(modoDepuracion) System.out.println("\t regla 
 				:}
 			ASSIGN exp:ex	{: if(modoDepuracion) System.out.println("\t regla 6 parte final");
 					if(variable!=null)
-					RESULT = new NodoAsignacion(variable.toString(),ex,null);
+					RESULT = new NodoAsignacion(variable.toString(),ex);
 					else{
 					RESULT = null;
 					System.out.println("Ocurrio error en cup # 0001");
