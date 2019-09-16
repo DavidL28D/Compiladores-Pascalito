@@ -13,7 +13,11 @@ public class NodoValor extends NodoBase {
 	}
 	
 	public Integer getValor() {
+            if(valor != null)
 		return valor;
+            else{
+                return 0;
+            }
 	}
 
 }

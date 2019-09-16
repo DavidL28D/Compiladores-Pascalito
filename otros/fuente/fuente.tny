@@ -7,32 +7,11 @@ int modulo;
 bool banderita;
 banderita := 1;
 int v[2];
-v[1] := 1;
 int temp;
-temp = v[1] + 1;
-if 9 <> 7 then
-	modulo := 5 mod 2;
+v[0] := 1;
+read v[1];
+if 1<>2 then
+
+    modulo := 4 mod 2
+    
 end
-
-{
-
-
-int x;
-int y;
-int z;
-modulo := 4 mod 2;
-y := 5;
-z:= 1;
-for x := 0 to y each z do
-	write modulo
-end
-
-int k;
-k := 0;
-repeat
-	write modulo;
-	k := k + 1
-until k < 5
-
-
-}

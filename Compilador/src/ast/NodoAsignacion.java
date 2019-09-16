@@ -3,20 +3,20 @@ package ast;
 public class NodoAsignacion extends NodoBase {
 	private String identificador;
 	private NodoBase expresion;
-        private int size;
+        private NodoBase expresion2;
 	
 	public NodoAsignacion(String identificador) {
 		super();
 		this.identificador = identificador;
 		this.expresion = null;
-                this.size = 0;
+                this.expresion2 = null;
 	}
 	
-	public NodoAsignacion(String identificador, NodoBase expresion, int size) {
+	public NodoAsignacion(String identificador, NodoBase expresion, NodoBase expresion2) {
 		super();
 		this.identificador = identificador;
 		this.expresion = expresion;
-                this.size = size;
+                this.expresion2 = expresion2;
 	}
 
 	public String getIdentificador() {
@@ -35,13 +35,15 @@ public class NodoAsignacion extends NodoBase {
 		this.expresion = expresion;
 	}
 
-        public int getSize() {
-            return size;
+        public NodoBase getExpresion2() {
+            return expresion2;
         }
 
-        public void setSize(int size) {
-            this.size = size;
+        public void setExpresion2(NodoBase expresion2) {
+            this.expresion2 = expresion2;
         }
+
+
 	
 	
 }

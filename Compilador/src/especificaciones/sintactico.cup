@@ -161,19 +161,19 @@ assign_stmt ::= ID:variable 	{: if(modoDepuracion) System.out.println("\t regla 
 				:}
 			ASSIGN exp:ex	{: if(modoDepuracion) System.out.println("\t regla 6 parte final");
 					if(variable!=null)
-					RESULT = new NodoAsignacion(variable.toString(),ex,0);
+					RESULT = new NodoAsignacion(variable.toString(),ex,null);
 					else{
 					RESULT = null;
 					System.out.println("Ocurrio error en cup # 0001");
 					}
 					:}
-                |   ID:variable LCOR NUM:n RCOR {: if(modoDepuracion) System.out.println("\t regla 6 parte del medio"); 
+                |   ID:variable LCOR exp:ex1 RCOR {: if(modoDepuracion) System.out.println("\t regla 6 parte del medio"); 
 				/*lineanum=1000; //Pasar/Obtener la linea correcta por el Simbolo
 				String nombre = variable.getName();*/
 				:}
-                        ASSIGN exp:ex {:  if(modoDepuracion) System.out.println("\t regla 6 parte final");
+                        ASSIGN exp:ex2 {:  if(modoDepuracion) System.out.println("\t regla 6 parte final");
                                         if(variable!=null)
-					RESULT = new NodoAsignacion(variable.toString(),ex,n);
+					RESULT = new NodoAsignacion(variable.toString(),ex2,ex1);
 					else{
 					RESULT = null;
 					System.out.println("Ocurrio error en cup # 0001");
@@ -183,7 +183,7 @@ assign_stmt ::= ID:variable 	{: if(modoDepuracion) System.out.println("\t regla 
                      
 		;
 
-read_stmt   ::= READ ID:variable	{: if(modoDepuracion) System.out.println("\t regla 7"); 
+read_stmt   ::= READ ID:variable	{: if(modoDepuracion) System.out.println("\t regla 7a"); 
 					System.out.println("Leyendo Variable");
 					if(variable!=null)
 					RESULT = new NodoLeer(variable.toString());
@@ -192,6 +192,16 @@ read_stmt   ::= READ ID:variable	{: if(modoDepuracion) System.out.println("\t re
 					System.out.println("Ocurrio error en cup # 0002");
 					}
 					:}
+                | READ ID:variable LCOR exp:ex RCOR {:  if(modoDepuracion) System.out.println("\t regla 7b"); 
+                                                    System.out.println("Leyendo Variable");
+                                                    if(variable!=null)
+                                                    RESULT = new NodoLeer(variable.toString(),ex);
+                                                    else{
+                                                    RESULT = null;
+                                                    System.out.println("Ocurrio error en cup # 0002");
+                                                    }
+                                                    
+                                                    :}
 		;
 
 write_stmt  ::= WRITE exp:ex	{: if(modoDepuracion) System.out.println("\t regla 8"); 
@@ -284,10 +294,10 @@ factor  ::= LPAREN exp:ex RPAREN	{: if(modoDepuracion) System.out.println("\t re
 						System.out.println("Ocurrio error en cup # 0005");
 					}
 					:}
-		| NOT factor:exD   {: if(modoDepuracion) System.out.println("\t regla 12e"); 
+		| NOT factor:exD   {: if(modoDepuracion) System.out.println("\t regla 12f"); 
                                     RESULT = new NodoOperacion(tipoOp.not,exD);
                                 :}
-		| error	{: if(modoDepuracion) System.out.println("\t regla 12f"); 
+		| error	{: if(modoDepuracion) System.out.println("\t regla 12g"); 
 				System.out.println("Ocurrio error en cup # 0003");
 				RESULT=null;
 				:}

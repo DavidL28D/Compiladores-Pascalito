@@ -182,12 +182,17 @@ public class Generador {
 		/* Genero el codigo para la expresion a la derecha de la asignacion */
 		generar(n.getExpresion());
 		/* Ahora almaceno el valor resultante */
+                int valor;
+                if(n.getExpresion2() != null){
+                    NodoValor v = (NodoValor)n.getExpresion2();
+                    valor = v.getValor();
+                }else{
+                    valor = 0;
+                }
                 
-                
-                
-                if(n.getSize()>0){
+                if(n.getExpresion2()!= null){
                     n.setIdentificador(n.getIdentificador()+"[]");
-                     direccion = tablaSimbolos.getDireccion(n.getIdentificador()) -(tablaSimbolos.getSize(n.getIdentificador()) - 1) + n.getSize();
+                     direccion = tablaSimbolos.getDireccion(n.getIdentificador()) -(tablaSimbolos.getSize(n.getIdentificador()) - 1) + valor;
                 }else{
                     direccion = tablaSimbolos.getDireccion(n.getIdentificador());
                 }
@@ -199,9 +204,23 @@ public class Generador {
 	private static void generarLeer(NodoBase nodo){
 		NodoLeer n = (NodoLeer)nodo;
 		int direccion;
+                int valor;
+                if(n.getExpresion() != null){
+                    NodoValor v = (NodoValor)n.getExpresion();
+                    valor = v.getValor();
+                }else{
+                    valor = 0;
+                }
 		if(UtGen.debug)	UtGen.emitirComentario("-> leer");
 		UtGen.emitirRO("IN", UtGen.AC, 0, 0, "leer: lee un valor entero ");
-		direccion = tablaSimbolos.getDireccion(n.getIdentificador());
+                
+                if(n.getExpresion() != null){
+                    n.setIdentificador(n.getIdentificador()+"[]");
+                    direccion = tablaSimbolos.getDireccion(n.getIdentificador()) -
+                            (tablaSimbolos.getSize(n.getIdentificador()) - 1) + valor;
+                }else{
+                    direccion = tablaSimbolos.getDireccion(n.getIdentificador());
+                }
 		UtGen.emitirRM("ST", UtGen.AC, direccion, UtGen.GP, "leer: almaceno el valor entero leido en el id "+n.getIdentificador());
 		if(UtGen.debug)	UtGen.emitirComentario("<- leer");
 	}
