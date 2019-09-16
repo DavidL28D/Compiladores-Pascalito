@@ -2,37 +2,20 @@
   in TINY language -
   computes factorial
 }
-
-{
-
 int modulo;
 int a;
+int b;
 bool banderita;
-
-int culo;
-banderita := 1;
-int v[2];
-int temp;
-v[0] := 1;
-read v[1];
-v[0] := banderita;
-culo := 3;
-modulo := culo;
-if 1<>2 then
-
-    
-    modulo := 4 mod 2
-end 
-
-}   
-
-int modulo;
-int a;
-bool banderita;
-a := 69;
+a := 69 + 2;
+b:= 1;
+write b;
 banderita := 0;
-modulo := a;
 if 9 <> 7 then
+	modulo:= 9 mod 7;
 	write modulo;
-	write banderita
+	write banderita;
+	int cosa;
+	cosa := b + a;
+	a := cosa;
+	write a
 end
