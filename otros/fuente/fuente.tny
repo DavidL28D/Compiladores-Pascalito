@@ -2,16 +2,9 @@
   in TINY language -
   computes factorial
 }
-
-int modulo;
-bool banderita;
-banderita := 1;
-int v[2];
-int temp;
-v[0] := 1;
-read v[1];
-if 1<>2 then
-
-    modulo := 4 mod 2
-    
+int numero;
+numero:=0;
+while numero < 4 do
+	write numero;
+	numero:=numero+1
 end

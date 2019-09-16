@@ -166,14 +166,20 @@ public class Generador {
 	}
 
 	private static void generarWhile(NodoBase nodo){
-		NodoWhile n = (NodoWhile)nodo;
-		int localidadSaltoInicio;
-		if(UtGen.debug) UtGen.emitirComentario("-> while");
-			/*Obtengo la linea donde inicia el ciclo */
-			/*Salto si la condicion del while no se cumple */
-			/* */
-		if(UtGen.debug)	UtGen.emitirComentario("<- while");	
-	}		
+            NodoWhile n = (NodoWhile)nodo;
+            int localidadSaltoInicio, localidadCondicionWhile,localidadFinal;
+            if(UtGen.debug) UtGen.emitirComentario("-> while");
+                localidadSaltoInicio = UtGen.emitirSalto(0);
+                localidadCondicionWhile = UtGen.emitirSalto(1);
+                generar(n.getCondicion());
+                generar(n.getCuerpo());
+                UtGen.emitirRM_Abs("JEQ", UtGen.AC, localidadSaltoInicio, "While: jmp hacia el inicio del cuerpo");
+                localidadFinal = UtGen.emitirSalto(0);
+                UtGen.cargarRespaldo(localidadCondicionWhile);
+                UtGen.emitirRM_Abs("JEQ", UtGen.AC, localidadFinal+1 , "While: jmp hacia el final del cuerpo del while");
+                UtGen.restaurarRespaldo();
+            if(UtGen.debug)	UtGen.emitirComentario("<- while");	
+	}			
 	
 	private static void generarAsignacion(NodoBase nodo){
 		NodoAsignacion n = (NodoAsignacion)nodo;
